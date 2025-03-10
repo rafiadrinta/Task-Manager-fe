@@ -1,16 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Button from "./component/Button";
-import EditTask from "./component/EditTask";
-import Header from "./component/header";
 
-const API_URL = "http://localhost:3000/tasks";
-
-export default function App() {
+export default function TaskManager() {
   const [tasks, setTasks] = useState([]);
   const [title, setTitle] = useState("");
   const [status, setStatus] = useState("pending");
   const [editingTask, setEditingTask] = useState(null);
+
+  const API_URL = "http://localhost:3000/tasks";
 
   // Fetch data saat pertama kali render
   useEffect(() => {
@@ -76,12 +73,34 @@ export default function App() {
   };
 
   return (
-    <div className="container">
-      <Header />
-      <EditTask title={title} status={status} setTitle={setTitle} setStatus={setStatus} />
-      <Button editingTask={editingTask} addTask={addTask} updateTask={updateTask} />
+    <div className="max-w-xl mx-auto p-5">
+      <h1 className="text-2xl font-bold mb-4">Task Manager</h1>
 
-      <ul className="mt-3">
+      <div className="mb-4">
+        <input
+          type="text"
+          className="border p-2 w-full rounded"
+          placeholder="Masukkan Judul Task"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+        />
+        <select
+          className="border p-2 w-full mt-2 rounded"
+          value={status}
+          onChange={(e) => setStatus(e.target.value)}
+        >
+          <option value="pending">Pending</option>
+          <option value="completed">Completed</option>
+        </select>
+        <button
+          onClick={editingTask ? updateTask : addTask}
+          className="bg-primary text-white px-4 py-2 rounded mt-2 w-full"
+        >
+          {editingTask ? "Update Task" : "Tambah Task"}
+        </button>
+      </div>
+
+      <ul>
         {tasks.map((task) => (
           <li
             key={task.id}
@@ -111,7 +130,5 @@ export default function App() {
         ))}
       </ul>
     </div>
-
-
-   );
+  );
 }
