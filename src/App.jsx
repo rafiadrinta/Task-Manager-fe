@@ -80,7 +80,7 @@ export default function TaskManager() {
         <input
           type="text"
           className="border p-2 w-full rounded"
-          placeholder="Masukkan judul task"
+          placeholder="Masukkan Judul Task"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
